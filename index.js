@@ -1,7 +1,12 @@
-import express from "express";
+/* import express from "express";
 import axios from "axios";
 import fs from "fs";
-import qs from "qs";
+import qs from "qs"; */
+
+const fs = require('fs');
+const express = require('express');
+const axios = require('axios');
+const qs = require('qs');
  
 
 const app = express();
