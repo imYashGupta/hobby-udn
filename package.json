@@ -2,6 +2,7 @@
   "name": "udaan-tracker",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,7 +16,9 @@
     "express": "^4.17.1",
     "http-proxy": "^1.18.1",
     "http-proxy-middleware": "^2.0.6",
+    "https": "^1.0.0",
     "jsdom": "^16.4.0",
+    "node-fetch": "^3.3.2",
     "qs": "^6.9.4"
   },
   "devDependencies": {
