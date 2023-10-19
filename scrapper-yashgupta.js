@@ -10,7 +10,7 @@ puppeteer.use(pluginStealth());
 
 
 const scrapperYashGupta = async (res) => {
-  puppeteer.launch({ executablePath: executablePath(),headless:false }).then(async browser => { 
+  puppeteer.launch({ executablePath: executablePath() }).then(async browser => { 
     // Create a new page 
     const page = await browser.newPage(); 
    
