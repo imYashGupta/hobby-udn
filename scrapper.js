@@ -1,7 +1,12 @@
-const puppeteer = require("puppeteer");
+const pup = require("puppeteer");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 require("dotenv").config();
+const puppeteer = require("puppeteer-extra"); 
+const pluginStealth = require("puppeteer-extra-plugin-stealth"); 
+
+
+puppeteer.use(pluginStealth()); 
 
 const scrapper = async (res) => {
     // Create browser instance, and give it a first tab
@@ -18,7 +23,7 @@ const scrapper = async (res) => {
         executablePath:
           process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PATH
-            : puppeteer.executablePath(),
+            : pup.executablePath(),
       });
     const page = await browser.newPage();
 
@@ -51,7 +56,7 @@ const scrapper = async (res) => {
 
     // Close the browser - done! 
     await browser.close();
-    res.json(responseBody);
+    res.send(responseBody);
     //   await browser.close();
 }
 
