@@ -11,6 +11,9 @@ const scrapper = async (res) => {
           "--no-sandbox",
           "--single-process",
           "--no-zygote",
+          "--disable-web-security",
+          "--disable-features=IsolateOrigins",
+          "--disable-site-isolation-trials"
         ],
         executablePath:
           process.env.NODE_ENV === "production"
