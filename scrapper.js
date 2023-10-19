@@ -16,6 +16,7 @@ const scrapper = async (res) => {
           process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PATH
             : puppeteer.executablePath(),
+            headless:true
       });
     const page = await browser.newPage();
 
