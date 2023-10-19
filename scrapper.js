@@ -1,12 +1,9 @@
-const pup = require("puppeteer");
+const puppeteer = require("puppeteer");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 require("dotenv").config();
-const puppeteer = require("puppeteer-extra"); 
-const pluginStealth = require("puppeteer-extra-plugin-stealth"); 
 
 
-puppeteer.use(pluginStealth()); 
 
 const scrapper = async (res) => {
     // Create browser instance, and give it a first tab
