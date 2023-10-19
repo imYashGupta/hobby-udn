@@ -8,6 +8,7 @@ const express = require('express');
 const cors = require('cors');
 const {scrapper} = require("./scrapper");
 const {scrapperYashGupta} = require("./scrapper-yashgupta");
+const {zenrows} = require("./zenrows");
 
 const app = express();
 /* app.use(function(req, res, next) {
@@ -27,6 +28,11 @@ app.get('/scrapper', (req, res) => {
 
 app.get("/yashgupta",(req,res) => {
   scrapperYashGupta(res);
+
+});
+
+app.get("/zenrows",(req,res) => {
+  zenrows(res);
 
 });
 
