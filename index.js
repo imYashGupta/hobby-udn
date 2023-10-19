@@ -3,10 +3,8 @@ import axios from "axios";
 import fs from "fs";
 import qs from "qs"; */
 
-const fs = require('fs');
 const express = require('express');
-const axios = require('axios');
-const qs = require('qs');
+
 const cors = require('cors');
 const {scrapper} = require("./scrapper");
 
