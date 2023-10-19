@@ -1,9 +1,22 @@
 const puppeteer = require("puppeteer");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+require("dotenv").config();
+
 const scrapper = async (res) => {
     // Create browser instance, and give it a first tab
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: [
+          "--disable-setuid-sandbox",
+          "--no-sandbox",
+          "--single-process",
+          "--no-zygote",
+        ],
+        executablePath:
+          process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+            : puppeteer.executablePath(),
+      });
     const page = await browser.newPage();
 
     // Allows you to intercept a request; must appear before
