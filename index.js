@@ -1,40 +1,80 @@
-/* import express from "express";
-import axios from "axios";
-import fs from "fs";
-import qs from "qs"; */
-
 const express = require('express');
-
-const cors = require('cors');
-const {scrapper} = require("./scrapper");
-const {scrapperYashGupta} = require("./scrapper-yashgupta");
-const {zenrows} = require("./zenrows");
-
 const app = express();
-/* app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-}); */
-
+// const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 const PORT = process.env.PORT || 5000;
- 
 
-app.get('/scrapper', (req, res) => {
-  scrapper(res);
+
+app.get("/product/:id", async (req, res) => {
+  const productId = req.params.id;
+  if (!productId) {
+    return res.status(400).json({ message: "Product ID missing" });
+  }
+
+  try {
+    const browser = await puppeteer.launch({ headless: false,
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+        "--disable-web-security",
+        "--disable-features=IsolateOrigins",
+        "--disable-site-isolation-trials"
+      ],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
+    });
+    
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (reqs) => {
+      if(reqs.resourceType() === 'image'){
+          reqs.abort();
+      }
+      else {
+          reqs.continue();
+      }
+  });
+    // Navigate to the first page
+    await page.goto('https://www.myntra.com/', { waitUntil: 'domcontentloaded' });
+
+    // Wait for 2 seconds (changed from 5 seconds for faster demonstration)
+    await page.waitForTimeout(2000);
+
+    // Now navigate to the desired URL
+    const response = await page.goto('https://www.myntra.com/gateway/v2/product/'+productId);
+    const responseBody = await response.json();
+
+    // Check if the response is successful (status code 200)
+    if (!response.ok()) {
+      await browser.close();
+      res.status(500).json({ error: responseBody.message,code:responseBody.code });
+      // throw new Error(`Request failed with status ${response.status()}`);
+
+    }
+
+    // Parse the response body as JSON
+    // const responseBody = await response.json();
+    // console.log(responseBody);
+
+    // Close the browser when done
+    await browser.close();
+    // Send the response
+    res.send(responseBody);
+  } catch (error) {
+    // console.error("Error:", error.message);
+    await browser.close();
+    res.status(500).json({ message: "Internal server error" });
+
+  }
+
 });
 
-app.get("/yashgupta",(req,res) => {
-  scrapperYashGupta(res);
-
-});
-
-app.get("/zenrows",(req,res) => {
-  zenrows(res);
-
-});
 
 // Start the Express.js server
 app.listen(PORT, () => {
