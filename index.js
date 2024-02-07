@@ -13,7 +13,7 @@ app.get("/product/:id", async (req, res) => {
     return res.status(400).json({ message: "Product ID missing" });
   }
 
-  try {
+  // try {
     const browser = await puppeteer.launch({ headless: false,
       args: [
         "--disable-setuid-sandbox",
@@ -66,12 +66,7 @@ app.get("/product/:id", async (req, res) => {
     await browser.close();
     // Send the response
     res.send(responseBody);
-  } catch (error) {
-    // console.error("Error:", error.message);
-    // await browser.close();
-    res.status(500).json({ message: "Internal server error" });
 
-  }
 
 });
 
