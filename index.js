@@ -41,13 +41,13 @@ app.get("/product/:id", async (req, res) => {
       }
     });
     // Navigate to the first page
-    await page.goto('https://www.myntra.com/', { waitUntil: 'domcontentloaded' });
+    const response =await page.goto('https://reqres.in/api/users?page=2', { waitUntil: 'domcontentloaded' });
 
     // Wait for 2 seconds (changed from 5 seconds for faster demonstration)
-    await page.waitForTimeout(2000);
+    // await page.waitForTimeout(2000);
 
     // Now navigate to the desired URL
-    const response = await page.goto('https://www.myntra.com/gateway/v2/product/'+productId);
+    // const response = await page.goto('https://www.myntra.com/gateway/v2/product/'+productId);
     const responseBody = await response.json();
 
     // Check if the response is successful (status code 200)
