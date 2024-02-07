@@ -39,7 +39,7 @@ app.get("/product/:id", async (req, res) => {
       else {
           reqs.continue();
       }
-  });
+    });
     // Navigate to the first page
     await page.goto('https://www.myntra.com/', { waitUntil: 'domcontentloaded' });
 
@@ -68,7 +68,7 @@ app.get("/product/:id", async (req, res) => {
     res.send(responseBody);
   } catch (error) {
     // console.error("Error:", error.message);
-    await browser.close();
+    // await browser.close();
     res.status(500).json({ message: "Internal server error" });
 
   }
