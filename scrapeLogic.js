@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
-    headless:true,
+    headless:false,
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
@@ -17,9 +17,9 @@ const scrapeLogic = async (res) => {
   });
   try {
     const page = await browser.newPage();
-    const response =await page.goto('https://reqres.in/api/users?page=2');
-
-    // await page.goto("https://developer.chrome.com/");
+    await page.goto('https://www.myntra.com/',{waitUntil:'domcontentloaded'});
+    await page.waitForTimeout(2000);
+    const response = await page.goto('https://www.myntra.com/gateway/v2/product/16354886');
 
     const responseBody = await response.json();
      
