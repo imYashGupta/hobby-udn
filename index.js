@@ -14,16 +14,7 @@ app.get("/product/:id", async (req, res) => {
   }
 
   // try {
-    const browser = await puppeteer.launch({ headless: false,
-      args: [
-        "--disable-setuid-sandbox",
-        "--no-sandbox",
-        "--single-process",
-        "--no-zygote",
-        "--disable-web-security",
-        "--disable-features=IsolateOrigins",
-        "--disable-site-isolation-trials"
-      ],
+    const browser = await puppeteer.launch({ 
       executablePath:
         process.env.NODE_ENV === "production"
           ? process.env.PUPPETEER_EXECUTABLE_PATH
@@ -70,7 +61,15 @@ app.get("/product/:id", async (req, res) => {
 
 });
 
+app.get("/scrape", (req, res) => {
+  scrapeLogic(res);
+});
 
+app.get("/", (req, res) => {
+  res.send("Render Puppeteer server is up and running!");
+});
+
+ 
 // Start the Express.js server
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
