@@ -5,7 +5,7 @@ const puppeteer = require("puppeteer");
 // const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 // puppeteer.use(StealthPlugin())
 const PORT = process.env.PORT || 5000;
-
+require("dotenv").config();
 
 app.get("/product/:id", async (req, res) => {
   const productId = req.params.id;
