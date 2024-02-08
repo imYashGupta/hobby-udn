@@ -6,6 +6,7 @@ const puppeteer = require("puppeteer");
 // puppeteer.use(StealthPlugin())
 const PORT = process.env.PORT || 5000;
 require("dotenv").config();
+const { scrapeLogic } = require("./scrapeLogic");
 
 app.get("/product/:id", async (req, res) => {
   const productId = req.params.id;
