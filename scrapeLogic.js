@@ -24,7 +24,7 @@ const scrapeLogic = async (res) => {
     const response = await page.goto('https://www.myntra.com/gateway/v2/product/16354886');
     console.error(response);
 
-    const responseBody = await response.json();
+    const responseBody = await response.text();
     
     res.send(responseBody);
   } catch (e) {
