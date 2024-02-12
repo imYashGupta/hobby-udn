@@ -14,6 +14,7 @@ app.get("/product/:id", async (req, res) => {
     return res.status(400).json({ message: "Product ID missing" });
   }
 
+
   // try {
     const browser = await puppeteer.launch({ 
       executablePath:
